@@ -1,0 +1,56 @@
+{
+  "name": "vue3cam-lib",
+  "version": "0.0.1",
+  "description": "A Vue 3 camera and barcode scanning library with TypeScript support",
+  "type": "module",
+  "main": "./dist/vue3cam-lib.umd.js",
+  "module": "./dist/vue3cam-lib.es.js",
+  "types": "./dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/vue3cam-lib.es.js",
+      "require": "./dist/vue3cam-lib.umd.js",
+      "types": "./dist/types/index.d.ts"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "author": "farshidb2011@gmail.com",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "homepage": "",
+  "bugs": {
+    "url": ""
+  },
+  "keywords": [
+    "vue3",
+    "camera",
+    "barcode",
+    "scanner",
+    "typescript",
+    "composable"
+  ],
+  "scripts": {
+    "build": "vue-tsc -p tsconfig.build.json --outDir dist/types && vite build",
+    "prepublishOnly": "pnpm run build",
+    "publish": "pnpm publish"
+  },
+  "peerDependencies": {
+    "vue": "^3.5.32"
+  },
+  "devDependencies": {
+    "@types/node": "^24.12.2",
+    "@vitejs/plugin-vue": "^6.0.6",
+    "@vue/tsconfig": "^0.9.1",
+    "mitt": "^3.0.1",
+    "typescript": "~6.0.2",
+    "vite": "^8.0.10",
+    "vue-tsc": "^3.2.7"
+  }
+}
