@@ -11,7 +11,7 @@ export default defineConfig({
       entry: path.resolve(__dirname, "src/index.ts"),
       name: "vue3camLib",
       formats:["es","umd","iife"],
-      fileName: (format) => `vue3cam-lib-${format}.js`,
+      fileName: (format) => `vue3cam-lib.${format}.js`,
     },
     rollupOptions: {
       external: ["vue"],
