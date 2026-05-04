@@ -1,6 +1,6 @@
 # vue3cam
 
-A lightweight, type-safe Vue 3 camera library for web applications. Provides simple composables and components for accessing device cameras, enabling barcode scanning, QR code reading, and real-time camera feeds.
+A lightweight, type-safe Vue 3 camera library for web applications. Provides simple composables and utilities for accessing device cameras and real-time camera streams.
 
 [![npm version](https://img.shields.io/npm/v/vue3cam-lib)](https://www.npmjs.com/package/vue3cam-lib)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
@@ -8,14 +8,14 @@ A lightweight, type-safe Vue 3 camera library for web applications. Provides sim
 
 ## Features
 
-- 📷 **Easy Camera Access** - Simple API to access device cameras
-- 🔍 **Barcode Detection** - Built-in barcode and QR code scanning support
+- 📷 **Easy Camera Access** - Simple API to access device cameras with minimal setup
 - 🎯 **Type-Safe** - Full TypeScript support with comprehensive type definitions
 - 🪨 **Lightweight** - Minimal bundle size (~16 KB gzipped)
 - 🎨 **Vue 3 Composables** - Reactive composables for easy integration
 - ⚡ **Performance Optimized** - Efficient resource management and cleanup
 - 🔦 **Torch Control** - Control device flashlight when available
 - 🌐 **Browser Compatible** - Works with modern browsers supporting Camera API
+- 🎬 **Real-time Streaming** - Stream camera feed directly to video elements
 
 ## Installation
 
