@@ -6,10 +6,13 @@ import {
   nextTick,
   onMounted,
   Ref,
+  MaybeRef,
+  unref,
 } from "vue";
 import { Camera } from "../core/camera";
 import { GlobalState } from "../store/state";
 import mitt from "mitt";
+import { Config } from "@/config/cfg";
 
 interface SystemPerformance {
   cores?: number;
@@ -20,7 +23,23 @@ interface SystemPerformance {
   };
 }
 
-export function useCamera() {
+export function useCamera(config: MaybeRef<Config | null> = null) {
+  const DEFAULT_CONFIG: Config = {
+    canvasHeight: "auto",
+    canvasWidth: "auto",
+    constraints: {
+      audio: false,
+      video: {
+        facingMode: { exact: "environment" },
+        width: { min: 1280, ideal: 1920 },
+        height: { min: 720, ideal: 1080 },
+        frameRate: { min: 15, ideal: 30, max: 30 },
+      },
+    },
+  };
+
+  const cfg = { ...DEFAULT_CONFIG, ...unref(config) };
+
   let animationFrameId: number | null = null;
   let systemPerformance: SystemPerformance | null = null;
   const eventBus = mitt();
@@ -173,15 +192,17 @@ export function useCamera() {
         if (!video.value.paused && !video.value.ended) {
           calculateCanvasSize();
           const context = canvas.value?.getContext("2d", {
-            alpha: false, // بهینه‌سازی performance
+            alpha: false, // performance
             willReadFrequently: false,
           });
           context?.drawImage(
             video.value,
             0,
             0,
-            canvas.value.width,
-            canvas.value.height,
+            cfg.canvasWidth === "auto" ? canvas.value.width : cfg.canvasWidth,
+            cfg.canvasHeight === "auto"
+              ? canvas.value.height
+              : cfg.canvasHeight,
           );
           animationFrameId = requestAnimationFrame(drawFrame);
         }
@@ -331,13 +352,15 @@ export function useCamera() {
 
       const dimension = getOptimizedDimensions();
 
-      constraints.value.video = fallbackCamera.value
-        ? true
-        : (dimension as any);
+      constraints.value = fallbackCamera.value
+        ? {
+            audio: false,
+            video: true,
+          }
+        : (cfg.constraints as any);
 
       stop();
       GlobalState.stream = await camera.getMediaStream(toValue(constraints));
-
       if (video.value) {
         video.value.srcObject = GlobalState.stream;
         video.value.addEventListener("play", canvasRender);
