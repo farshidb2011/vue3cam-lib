@@ -45,8 +45,8 @@ export function useCamera(config: MaybeRef<Config | null> = null) {
   const eventBus = mitt();
   const camera = new Camera();
 
-  const tempraryImage: Ref<string | null> = ref(null);
-  const tempraryVideo: Ref<string | null> = ref(null);
+  const tempraryImage: Ref<Blob | null> = ref(null);
+  const tempraryVideo: Ref<Blob | null> = ref(null);
   const container: Ref<HTMLElement | null> = ref(null);
   const video: Ref<HTMLVideoElement | null> = ref(null);
   const canvas: Ref<HTMLCanvasElement | null> = ref(null);
@@ -68,7 +68,6 @@ export function useCamera(config: MaybeRef<Config | null> = null) {
 
   const resetTempImage = () => {
     if (tempraryImage.value) {
-      URL.revokeObjectURL(tempraryImage.value);
       tempraryImage.value = null;
     }
   };
@@ -78,10 +77,7 @@ export function useCamera(config: MaybeRef<Config | null> = null) {
       if (!video.value) return false;
       const canvasEl = await camera.capture(video.value);
       const blob = await camera.getBlob(canvasEl, 0.85);
-      if (tempraryImage.value) {
-        URL.revokeObjectURL(tempraryImage.value);
-      }
-      tempraryImage.value = URL.createObjectURL(blob);
+      tempraryImage.value = blob;
       return true;
     } catch (error) {
       console.error("Error in useOldCapture:", error);
@@ -109,10 +105,8 @@ export function useCamera(config: MaybeRef<Config | null> = null) {
       }
 
       const blob = await camera.capture2(track);
-      if (tempraryImage.value) {
-        URL.revokeObjectURL(tempraryImage.value);
-      }
-      tempraryImage.value = URL.createObjectURL(blob);
+
+      tempraryImage.value = blob;
       return true;
     } catch (error) {
       console.error("Capture error:", error);
@@ -236,9 +230,7 @@ export function useCamera(config: MaybeRef<Config | null> = null) {
     }
 
     resetTempImage();
-    if (tempraryVideo.value) {
-      URL.revokeObjectURL(tempraryVideo.value);
-    }
+    tempraryVideo.value = null;
   });
 
   const getTrack = () => {
@@ -512,10 +504,7 @@ export function useCamera(config: MaybeRef<Config | null> = null) {
         recordingOptions,
       );
 
-      if (tempraryVideo.value) {
-        URL.revokeObjectURL(tempraryVideo.value);
-      }
-      tempraryVideo.value = URL.createObjectURL(blob);
+      tempraryVideo.value = blob;
       recording.value = false;
 
       if (typeof cb === "function") {
