@@ -8,6 +8,8 @@ import {
   Ref,
   MaybeRef,
   unref,
+  reactive,
+  computed,
 } from "vue";
 import { Camera } from "../core/camera";
 import { GlobalState } from "../store/state";
@@ -23,7 +25,7 @@ interface SystemPerformance {
   };
 }
 
-export function useCamera(config: MaybeRef<Config | null> = null) {
+export function useCamera() {
   const DEFAULT_CONFIG: Config = {
     canvasHeight: "auto",
     canvasWidth: "auto",
@@ -38,13 +40,12 @@ export function useCamera(config: MaybeRef<Config | null> = null) {
     },
   };
 
-  const cfg = { ...DEFAULT_CONFIG, ...unref(config) };
-
   let animationFrameId: number | null = null;
   let systemPerformance: SystemPerformance | null = null;
   const eventBus = mitt();
   const camera = new Camera();
 
+  const cfg = reactive<Config>({ ...DEFAULT_CONFIG });
   const tempraryImage: Ref<Blob | null> = ref(null);
   const tempraryVideo: Ref<Blob | null> = ref(null);
   const container: Ref<HTMLElement | null> = ref(null);
@@ -126,8 +127,11 @@ export function useCamera(config: MaybeRef<Config | null> = null) {
     return URL.createObjectURL(blob);
   };
 
-  const init = async () => {
+  const init = async (config: MaybeRef<Config | null> = null) => {
     try {
+      if (config !== null) {
+        Object.assign(cfg, toValue(config));
+      }
       await initSystemPerformance();
 
       GlobalState.permissionState = await camera.getPermissionState();
