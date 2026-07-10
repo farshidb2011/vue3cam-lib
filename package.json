@@ -1,7 +1,7 @@
 {
   "name": "vue3cam-lib",
-  "version": "0.0.6",
-  "description": "A Vue 3 camera and barcode scanning library with TypeScript support",
+  "version": "0.0.9",
+  "description": "A Vue 3 camera with TypeScript support",
   "type": "module",
   "main": "./dist/vue3cam-lib.umd.js",
   "module": "./dist/vue3cam-lib.es.js",
@@ -31,8 +31,6 @@
   "keywords": [
     "vue3",
     "camera",
-    "barcode",
-    "scanner",
     "typescript",
     "composable"
   ],
