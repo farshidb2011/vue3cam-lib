@@ -1,6 +1,6 @@
 {
   "name": "vue3cam-lib",
-  "version": "0.0.9",
+  "version": "0.1.0",
   "description": "A Vue 3 camera with TypeScript support",
   "type": "module",
   "main": "./dist/vue3cam-lib.umd.js",
