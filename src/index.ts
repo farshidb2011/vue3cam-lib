@@ -4,7 +4,7 @@ export {
   NotSupportCamera,
   QueryCameraError,
 } from "./core/camera";
-export { useCamera, UnSupportTorchError } from "./composiables/camera";
+export { useCamera, UnSupportTorchError } from "./composables/camera";
 export { GlobalState } from "./store/state";
 export * from "./config/cfg";
 
