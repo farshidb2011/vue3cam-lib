@@ -739,7 +739,7 @@ Some features depend on optional APIs:
 src/
 ├── index.ts              # Public exports
 ├── core/camera.ts        # Camera class and core errors
-├── composiables/camera.ts # useCamera() composable
+├── composables/camera.ts  # useCamera() composable
 ├── store/state.ts        # GlobalState
 └── config/cfg.ts         # Config and resolution types
 ```
